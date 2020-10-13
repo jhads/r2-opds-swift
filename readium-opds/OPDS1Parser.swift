@@ -201,7 +201,7 @@ public class OPDS1Parser: Loggable {
                 href: absoluteHref,
                 type: link.attributes["type"],
                 title: link.attributes["title"],
-                rels: rels,
+                rels: rels.compactMap { $0 },
                 properties: try Properties(json: properties)!
             )
 
@@ -372,7 +372,7 @@ public class OPDS1Parser: Loggable {
                 type: linkElement.attributes["type"],
                 title: linkElement.attributes["title"],
                 rel: linkElement.attributes["rel"],
-                properties: try Properties(json: properties)!
+                properties: try! Properties(json: properties)!
             )
 
             let rels = link.rels
