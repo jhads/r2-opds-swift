@@ -165,7 +165,7 @@ public class OPDS1Parser: Loggable {
                     type: link.attr("type"),
                     title: entry.firstChild(tag: "title")?.stringValue,
                     rel: link.attr("rel"),
-                    properties: .init(properties)
+                    properties: try Properties(json: properties)!
                 )
 
                 // Check collection link
@@ -182,7 +182,7 @@ public class OPDS1Parser: Loggable {
                 continue
             }
             
-            var rels = Array(ofNotNil: link.attributes["rel"])
+            var rels = Array(arrayLiteral: link.attributes["rel"])
             var properties: [String: Any] = [:]
             
             let isFacet = rels.contains("http://opds-spec.org/facet")
@@ -202,7 +202,7 @@ public class OPDS1Parser: Loggable {
                 type: link.attributes["type"],
                 title: link.attributes["title"],
                 rels: rels,
-                properties: .init(properties)
+                properties: try Properties(json: properties)!
             )
 
             if isFacet {
@@ -372,7 +372,7 @@ public class OPDS1Parser: Loggable {
                 type: linkElement.attributes["type"],
                 title: linkElement.attributes["title"],
                 rel: linkElement.attributes["rel"],
-                properties: .init(properties)
+                properties: try Properties(json: properties)!
             )
 
             let rels = link.rels
